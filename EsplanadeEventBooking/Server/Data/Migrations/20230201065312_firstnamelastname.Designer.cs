@@ -4,14 +4,16 @@ using EsplanadeEventBooking.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EsplanadeEventBooking.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230201065312_firstnamelastname")]
+    partial class firstnamelastname
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,125 +90,6 @@ namespace EsplanadeEventBooking.Server.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("EsplanadeEventBooking.Shared.Domain.Euser", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Eusers");
-                });
-
-            modelBuilder.Entity("EsplanadeEventBooking.Shared.Domain.Event", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("AdminId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("EveUserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("TicketId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AdminId");
-
-                    b.HasIndex("EveUserId");
-
-                    b.HasIndex("TicketId");
-
-                    b.ToTable("Events");
-                });
-
-            modelBuilder.Entity("EsplanadeEventBooking.Shared.Domain.Ticket", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ColumnNo")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("EuserID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EventID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RowNo")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("VIP")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EuserID");
-
-                    b.ToTable("Tickets");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.DeviceFlowCodes", b =>
@@ -447,36 +330,6 @@ namespace EsplanadeEventBooking.Server.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("EsplanadeEventBooking.Shared.Domain.Event", b =>
-                {
-                    b.HasOne("EsplanadeEventBooking.Shared.Domain.Euser", "Admin")
-                        .WithMany("AdminEvent")
-                        .HasForeignKey("AdminId");
-
-                    b.HasOne("EsplanadeEventBooking.Shared.Domain.Euser", "EveUser")
-                        .WithMany("EveUserEvent")
-                        .HasForeignKey("EveUserId");
-
-                    b.HasOne("EsplanadeEventBooking.Shared.Domain.Ticket", null)
-                        .WithMany("Events")
-                        .HasForeignKey("TicketId");
-
-                    b.Navigation("Admin");
-
-                    b.Navigation("EveUser");
-                });
-
-            modelBuilder.Entity("EsplanadeEventBooking.Shared.Domain.Ticket", b =>
-                {
-                    b.HasOne("EsplanadeEventBooking.Shared.Domain.Euser", "Euser")
-                        .WithMany()
-                        .HasForeignKey("EuserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Euser");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -526,18 +379,6 @@ namespace EsplanadeEventBooking.Server.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("EsplanadeEventBooking.Shared.Domain.Euser", b =>
-                {
-                    b.Navigation("AdminEvent");
-
-                    b.Navigation("EveUserEvent");
-                });
-
-            modelBuilder.Entity("EsplanadeEventBooking.Shared.Domain.Ticket", b =>
-                {
-                    b.Navigation("Events");
                 });
 #pragma warning restore 612, 618
         }

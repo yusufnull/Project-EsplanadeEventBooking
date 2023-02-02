@@ -1,4 +1,6 @@
-﻿using EsplanadeEventBooking.Server.Models;
+﻿using EsplanadeEventBooking.Server.Configurations.Entities;
+using EsplanadeEventBooking.Server.Models;
+using EsplanadeEventBooking.Shared.Domain;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace EsplanadeEventBooking.Server.Data
 {
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
@@ -16,6 +19,18 @@ namespace EsplanadeEventBooking.Server.Data
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
+        }
+        public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<Event> Events { get; set; }
+        public DbSet<Euser> Eusers { get; set; }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.ApplyConfiguration(new RoleSeedConfiguration());
+            builder.ApplyConfiguration(new UserRoleSeedConfiguration());
+            builder.ApplyConfiguration(new UserSeedConfiguration());
+            builder.ApplyConfiguration(new EuserSeedConfiguration());
+            builder.ApplyConfiguration(new EventSeedConfiguration());
         }
     }
 }

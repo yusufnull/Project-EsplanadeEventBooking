@@ -239,7 +239,7 @@ namespace EsplanadeEventBooking.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Events",
+                name: "Bookevents",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -257,20 +257,49 @@ namespace EsplanadeEventBooking.Server.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Events", x => x.Id);
+                    table.PrimaryKey("PK_Bookevents", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Events_Eusers_CreatorId",
+                        name: "FK_Bookevents_Eusers_CreatorId",
                         column: x => x.CreatorId,
                         principalTable: "Eusers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Events_Tickets_TicketId",
+                        name: "FK_Bookevents_Tickets_TicketId",
                         column: x => x.TicketId,
                         principalTable: "Tickets",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "ad2bcf0c-20db-474f-8407-5a6b159518ba", "854ce701-2499-44a5-a10a-1f2b8e491ff3", "Administrator", "ADMINISTRATOR" },
+                    { "bd2bcf0c-20db-474f-8407-5a6b159518bb", "66b91ad3-0ed2-4f23-88a4-4777e07984eb", "User", "USER" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "b86f5249-5cd6-47d7-8c78-82d77fd9f488", "admin@localhost.com", false, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN", "AQAAAAEAACcQAAAAEKnCY0eb4xFerEVP2qmCW5EYYWXmorlXyf2YT4j1carjuRZ7ryROSROpbEDvQqKa/w==", null, false, "de74e100-8f94-4c93-b25c-69a9246cd871", false, "Admin" });
+
+            migrationBuilder.InsertData(
+                table: "Eusers",
+                columns: new[] { "Id", "Age", "CreatedBy", "DateCreated", "DateUpdated", "Name", "UpdatedBy" },
+                values: new object[] { 1, 20, "System", new DateTime(2023, 2, 3, 8, 9, 53, 132, DateTimeKind.Local).AddTicks(907), new DateTime(2023, 2, 3, 8, 9, 53, 132, DateTimeKind.Local).AddTicks(9473), "Adam", "System" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "ad2bcf0c-20db-474f-8407-5a6b159518ba", "3781efa7-66dc-47f0-860f-e506d04102e4" });
+
+            migrationBuilder.InsertData(
+                table: "Bookevents",
+                columns: new[] { "Id", "CreatedBy", "CreatorId", "DateCreated", "DateUpdated", "EndDate", "Location", "StartDate", "TicketId", "Title", "UpdatedBy" },
+                values: new object[] { 1, "System", 1, new DateTime(2023, 2, 3, 8, 9, 53, 133, DateTimeKind.Local).AddTicks(3834), new DateTime(2023, 2, 3, 8, 9, 53, 133, DateTimeKind.Local).AddTicks(3837), new DateTime(2023, 2, 3, 8, 9, 53, 133, DateTimeKind.Local).AddTicks(3528), "Theatre", new DateTime(2023, 2, 3, 8, 9, 53, 133, DateTimeKind.Local).AddTicks(3339), null, "TwoSet vs Davie Concert", "System" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -312,6 +341,16 @@ namespace EsplanadeEventBooking.Server.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Bookevents_CreatorId",
+                table: "Bookevents",
+                column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bookevents_TicketId",
+                table: "Bookevents",
+                column: "TicketId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DeviceCodes_DeviceCode",
                 table: "DeviceCodes",
                 column: "DeviceCode",
@@ -321,16 +360,6 @@ namespace EsplanadeEventBooking.Server.Migrations
                 name: "IX_DeviceCodes_Expiration",
                 table: "DeviceCodes",
                 column: "Expiration");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Events_CreatorId",
-                table: "Events",
-                column: "CreatorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Events_TicketId",
-                table: "Events",
-                column: "TicketId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersistedGrants_Expiration",
@@ -371,10 +400,10 @@ namespace EsplanadeEventBooking.Server.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "DeviceCodes");
+                name: "Bookevents");
 
             migrationBuilder.DropTable(
-                name: "Events");
+                name: "DeviceCodes");
 
             migrationBuilder.DropTable(
                 name: "PersistedGrants");

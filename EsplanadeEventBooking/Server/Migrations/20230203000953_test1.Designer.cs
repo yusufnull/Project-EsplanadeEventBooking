@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EsplanadeEventBooking.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230202210130_test1")]
+    [Migration("20230203000953_test1")]
     partial class test1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -90,39 +90,29 @@ namespace EsplanadeEventBooking.Server.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "b86f5249-5cd6-47d7-8c78-82d77fd9f488",
+                            Email = "admin@localhost.com",
+                            EmailConfirmed = false,
+                            FirstName = "Admin",
+                            LastName = "User",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@LOCALHOST.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKnCY0eb4xFerEVP2qmCW5EYYWXmorlXyf2YT4j1carjuRZ7ryROSROpbEDvQqKa/w==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "de74e100-8f94-4c93-b25c-69a9246cd871",
+                            TwoFactorEnabled = false,
+                            UserName = "Admin"
+                        });
                 });
 
-            modelBuilder.Entity("EsplanadeEventBooking.Shared.Domain.Euser", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Eusers");
-                });
-
-            modelBuilder.Entity("EsplanadeEventBooking.Shared.Domain.Event", b =>
+            modelBuilder.Entity("EsplanadeEventBooking.Shared.Domain.Bookevent", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -165,7 +155,64 @@ namespace EsplanadeEventBooking.Server.Migrations
 
                     b.HasIndex("TicketId");
 
-                    b.ToTable("Events");
+                    b.ToTable("Bookevents");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedBy = "System",
+                            CreatorId = 1,
+                            DateCreated = new DateTime(2023, 2, 3, 8, 9, 53, 133, DateTimeKind.Local).AddTicks(3834),
+                            DateUpdated = new DateTime(2023, 2, 3, 8, 9, 53, 133, DateTimeKind.Local).AddTicks(3837),
+                            EndDate = new DateTime(2023, 2, 3, 8, 9, 53, 133, DateTimeKind.Local).AddTicks(3528),
+                            Location = "Theatre",
+                            StartDate = new DateTime(2023, 2, 3, 8, 9, 53, 133, DateTimeKind.Local).AddTicks(3339),
+                            Title = "TwoSet vs Davie Concert",
+                            UpdatedBy = "System"
+                        });
+                });
+
+            modelBuilder.Entity("EsplanadeEventBooking.Shared.Domain.Euser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Eusers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Age = 20,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2023, 2, 3, 8, 9, 53, 132, DateTimeKind.Local).AddTicks(907),
+                            DateUpdated = new DateTime(2023, 2, 3, 8, 9, 53, 132, DateTimeKind.Local).AddTicks(9473),
+                            Name = "Adam",
+                            UpdatedBy = "System"
+                        });
                 });
 
             modelBuilder.Entity("EsplanadeEventBooking.Shared.Domain.Ticket", b =>
@@ -337,6 +384,22 @@ namespace EsplanadeEventBooking.Server.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "ad2bcf0c-20db-474f-8407-5a6b159518ba",
+                            ConcurrencyStamp = "854ce701-2499-44a5-a10a-1f2b8e491ff3",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        },
+                        new
+                        {
+                            Id = "bd2bcf0c-20db-474f-8407-5a6b159518bb",
+                            ConcurrencyStamp = "66b91ad3-0ed2-4f23-88a4-4777e07984eb",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -424,6 +487,13 @@ namespace EsplanadeEventBooking.Server.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "3781efa7-66dc-47f0-860f-e506d04102e4",
+                            RoleId = "ad2bcf0c-20db-474f-8407-5a6b159518ba"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -447,7 +517,7 @@ namespace EsplanadeEventBooking.Server.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("EsplanadeEventBooking.Shared.Domain.Event", b =>
+            modelBuilder.Entity("EsplanadeEventBooking.Shared.Domain.Bookevent", b =>
                 {
                     b.HasOne("EsplanadeEventBooking.Shared.Domain.Euser", "Creator")
                         .WithMany()
@@ -456,7 +526,7 @@ namespace EsplanadeEventBooking.Server.Migrations
                         .IsRequired();
 
                     b.HasOne("EsplanadeEventBooking.Shared.Domain.Ticket", null)
-                        .WithMany("Events")
+                        .WithMany("Bookevent")
                         .HasForeignKey("TicketId");
 
                     b.Navigation("Creator");
@@ -526,7 +596,7 @@ namespace EsplanadeEventBooking.Server.Migrations
 
             modelBuilder.Entity("EsplanadeEventBooking.Shared.Domain.Ticket", b =>
                 {
-                    b.Navigation("Events");
+                    b.Navigation("Bookevent");
                 });
 #pragma warning restore 612, 618
         }

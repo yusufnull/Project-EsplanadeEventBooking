@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace EsplanadeEventBooking.Server.Configurations.Entities
 {
-    public class EventSeedConfiguration : IEntityTypeConfiguration<Event>
+    public class BookeventSeedConfiguration : IEntityTypeConfiguration<Bookevent>
     {
-        public void Configure(EntityTypeBuilder<Event> builder)
+        public void Configure(EntityTypeBuilder<Bookevent> builder)
         {
             builder.HasData(
-                new Event
+                new Bookevent
                 {
                     Id = 1,
                     Title = "TwoSet vs Davie Concert",

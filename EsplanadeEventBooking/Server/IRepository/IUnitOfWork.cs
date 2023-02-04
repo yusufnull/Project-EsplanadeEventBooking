@@ -10,7 +10,7 @@ namespace EsplanadeEventBooking.Server.IRepository
     public interface IUnitOfWork : IDisposable
     {
         Task Save(HttpContext httpContext);
-        IGenericRepository<Event> Events { get; }
+        IGenericRepository<Bookevent> Bookevents { get; }
         IGenericRepository<Euser> Eusers { get; }
         IGenericRepository<Ticket> Tickets { get; }
     }

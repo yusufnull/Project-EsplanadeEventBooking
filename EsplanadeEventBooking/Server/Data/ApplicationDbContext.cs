@@ -21,7 +21,7 @@ namespace EsplanadeEventBooking.Server.Data
         {
         }
         public DbSet<Ticket> Tickets { get; set; }
-        public DbSet<Event> Events { get; set; }
+        public DbSet<Bookevent> Bookevents { get; set; }
         public DbSet<Euser> Eusers { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -30,7 +30,7 @@ namespace EsplanadeEventBooking.Server.Data
             builder.ApplyConfiguration(new UserRoleSeedConfiguration());
             builder.ApplyConfiguration(new UserSeedConfiguration());
             builder.ApplyConfiguration(new EuserSeedConfiguration());
-            builder.ApplyConfiguration(new EventSeedConfiguration());
+            builder.ApplyConfiguration(new BookeventSeedConfiguration());
         }
     }
 }

@@ -16,7 +16,7 @@ namespace EsplanadeEventBooking.Server.Repository
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
-        private IGenericRepository<Event> _events;
+        private IGenericRepository<Bookevent> _bookevents;
         private IGenericRepository<Euser> _eusers;
         private IGenericRepository<Ticket> _tickets;
         private UserManager<ApplicationUser> _userManager;
@@ -27,8 +27,8 @@ namespace EsplanadeEventBooking.Server.Repository
             _userManager = userManager;
         }
             
-        public IGenericRepository<Event> Events
-            => _events ??= new GenericRepository<Event>(_context);
+        public IGenericRepository<Bookevent> Bookevents
+            => _bookevents ??= new GenericRepository<Bookevent>(_context);
         public IGenericRepository<Euser> Eusers
             => _eusers ??= new GenericRepository<Euser>(_context);
         public IGenericRepository<Ticket> Tickets

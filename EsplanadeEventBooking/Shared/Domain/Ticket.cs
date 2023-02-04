@@ -13,7 +13,7 @@ namespace EsplanadeEventBooking.Shared.Domain
 		public bool VIP { get; set; }
 		public virtual Euser Euser { get; set; }
 		public int EuserID { get; set; }
-		public virtual List<Event> Events { get; set; }
+		public virtual List<Bookevent> Bookevent { get; set; }
 		public int EventID { get; set; }
 	}
 }

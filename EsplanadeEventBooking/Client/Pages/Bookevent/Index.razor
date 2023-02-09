@@ -1,0 +1,69 @@
+﻿@page "/bookevents/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h3 class="card-title">Bookevents</h3>
+<br />
+
+<a href="/bookevents/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Bookevent
+</a>
+<br />
+<br />
+
+@if (Bookevents == null)
+{
+    <div class="alert alert-info">Loading Bookevents...</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var bookevent in Bookevents)
+            {
+                <tr>
+                    <td>@bookevent.Title</td>
+                    <td>
+                        <a href="/bookevents/view/@bookevent.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/bookevents/edit/@bookevent.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(bookevent.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Bookevent> Bookevents;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Bookevents = await _client.GetFromJsonAsync<List<Bookevent>>($"{Endpoints.BookeventsEndpoint}");
+    }
+
+    async Task Delete(int bookeventId)
+    {
+        var bookevent = Bookevents.First(q => q.Id == bookeventId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {bookevent.Title}?");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.BookeventsEndpoint}/{bookeventId}");
+            await OnInitializedAsync();
+        }
+    }
+}

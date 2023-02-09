@@ -31,7 +31,7 @@ namespace EsplanadeEventBooking.Server.Controllers
         public async Task<IActionResult> GetBookevents()
         {
             //return await _context.Bookevents.ToListAsync();
-            var bookevents = await _unitOfWork.Bookevents.GetAll();
+            var bookevents = await _unitOfWork.Bookevents.GetAll(includes: q => q.Include(x => x.Creator));
             return Ok(bookevents);
         }
 

@@ -9,16 +9,20 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
     <div class="form-group">
-        <label>Name:</label>
+        <label>Title:</label>
         <div>
             <InputText @bind-Value="@bookevent.Title" class="form-control" />
             <ValidationMessage For="@(() => bookevent.Title)" />
         </div>
+    </div>
+    <div class="form-group">
         <label>Location:</label>
         <div>
-            <InputText @bind-Value="@bookevent.Title" class="form-control" />
-            <ValidationMessage For="@(() => bookevent.Title)" />
+            <InputText @bind-Value="@bookevent.Location" class="form-control" />
+            <ValidationMessage For="@(() => bookevent.Location)" />
         </div>
+    </div>
+    <div class="form-group">
         <label>Start Date:</label>
         <div class="form-group">
             <div>
@@ -27,17 +31,49 @@
                 <ValidationMessage For="@(() => bookevent.StartDate)" />
             </div>
         </div>
+    </div>
+    <div class="form-group">
         <label>End Date:</label>
-
+        <div>
+            <InputDate @bind-Value="bookevent.EndDate" class="form-control">
+            </InputDate>
+            <ValidationMessage For="@(() => bookevent.EndDate)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Creator:</label>
+        <div>
+            <InputSelect @bind-Value="bookevent.CreatorId" class="form-control">
+                <option value="">-- Select Creator --</option>
+                @if (Creators != null)
+                {
+                    foreach (var creators in Creators)
+                    {
+                        <option value="@creators.Id">
+                            @creators.Name
+                        </option>
+                    }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => bookevent.CreatorId)" />
+        </div>
     </div>
     <button type="submit" class="btn btn-success btn-block">
         Create Bookevent
     </button>
 </EditForm>
 
-@code { Bookevent bookevent = new Bookevent();
-            private async Task CreateBookevent()
-            {
-                await _client.PostAsJsonAsync(Endpoints.BookeventsEndpoint, bookevent);
-                _navManager.NavigateTo("/bookevents/");
-            } }
+@code { 
+    Bookevent bookevent = new Bookevent();
+    private IList<Euser> Creators;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Creators = await _client.GetFromJsonAsync<List<Euser>>($"{Endpoints.EusersEndpoint}");
+    }
+
+    private async Task CreateBookevent()
+    {
+        await _client.PostAsJsonAsync(Endpoints.BookeventsEndpoint, bookevent);
+        _navManager.NavigateTo("/bookevents/");
+    } }

@@ -1,0 +1,66 @@
+﻿@page "/events/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- PAGE settings -->
+        <link rel="icon" href="https://templates.pingendo.com/assets/Pingendo_favicon.ico">
+        <title>Album</title>
+        <meta name="description" content="Wireframe design of an album page by Pingendo">
+        <meta name="keywords" content="Pingendo bootstrap example template wireframe album ">
+        <meta name="author" content="Pingendo">
+        <!-- CSS dependencies -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+        <link rel="stylesheet" href="wireframe.css">
+    </head>
+
+    <body>
+        <div class="py-4 bg-light" style="	background-image: linear-gradient(to bottom, rgba(233, 197, 55, 0.8), rgba(233, 175, 55, 0.8));	background-position: top left;	background-size: 100%;	background-repeat: repeat;">
+            <div class="container">
+                <div class="row">
+                    @if (Bookevents == null)
+                    {
+                        <div class="alert alert-info">Loading Bookevents...</div>
+                    }
+                    else {
+                        @foreach (var bookevent in Bookevents)
+                        {
+                            <EventCard Event="bookevent" />
+                    }
+                    }
+
+                </div>
+            </div>
+        </div>
+        <footer class="text-muted py-5">
+            <div class="container">
+                <p class="float-right">
+                    <a href="#">Back to top</a>
+                </p>
+            </div>
+        </footer>
+        </body>
+
+</html>
+
+@code {
+    private List<Bookevent> Bookevents;
+
+    protected async override Task OnInitializedAsync()
+    {
+        try
+        {
+            Bookevents = await _client.GetFromJsonAsync<List<Bookevent>>($"{Endpoints.BookeventsEndpoint}");
+        }
+        catch (Exception ex)
+        {
+            // Do something with the exception, such as logging or displaying an error message
+            Console.WriteLine(ex.Message);
+        }
+    }
+}

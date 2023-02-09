@@ -94,7 +94,7 @@ namespace EsplanadeEventBooking.Server.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b86f5249-5cd6-47d7-8c78-82d77fd9f488",
+                            ConcurrencyStamp = "07df3e6d-c504-42f8-8c7c-af51f51667e8",
                             Email = "admin@localhost.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -102,9 +102,9 @@ namespace EsplanadeEventBooking.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKnCY0eb4xFerEVP2qmCW5EYYWXmorlXyf2YT4j1carjuRZ7ryROSROpbEDvQqKa/w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIE3r5TZdSLkGCxYaVObBDA20EtcYwt6D7s2UfV82NBqulcUp8QSXVZsOcM6Diwo6A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "de74e100-8f94-4c93-b25c-69a9246cd871",
+                            SecurityStamp = "b8521489-4e7c-4ffc-a782-08852fa1e4f6",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -154,21 +154,6 @@ namespace EsplanadeEventBooking.Server.Migrations
                     b.HasIndex("TicketId");
 
                     b.ToTable("Bookevents");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedBy = "System",
-                            CreatorId = 1,
-                            DateCreated = new DateTime(2023, 2, 3, 8, 9, 53, 133, DateTimeKind.Local).AddTicks(3834),
-                            DateUpdated = new DateTime(2023, 2, 3, 8, 9, 53, 133, DateTimeKind.Local).AddTicks(3837),
-                            EndDate = new DateTime(2023, 2, 3, 8, 9, 53, 133, DateTimeKind.Local).AddTicks(3528),
-                            Location = "Theatre",
-                            StartDate = new DateTime(2023, 2, 3, 8, 9, 53, 133, DateTimeKind.Local).AddTicks(3339),
-                            Title = "TwoSet vs Davie Concert",
-                            UpdatedBy = "System"
-                        });
                 });
 
             modelBuilder.Entity("EsplanadeEventBooking.Shared.Domain.Euser", b =>
@@ -206,8 +191,8 @@ namespace EsplanadeEventBooking.Server.Migrations
                             Id = 1,
                             Age = 20,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 3, 8, 9, 53, 132, DateTimeKind.Local).AddTicks(907),
-                            DateUpdated = new DateTime(2023, 2, 3, 8, 9, 53, 132, DateTimeKind.Local).AddTicks(9473),
+                            DateCreated = new DateTime(2023, 2, 9, 21, 11, 48, 334, DateTimeKind.Local).AddTicks(9972),
+                            DateUpdated = new DateTime(2023, 2, 9, 21, 11, 48, 335, DateTimeKind.Local).AddTicks(8197),
                             Name = "Adam",
                             UpdatedBy = "System"
                         });
@@ -387,14 +372,14 @@ namespace EsplanadeEventBooking.Server.Migrations
                         new
                         {
                             Id = "ad2bcf0c-20db-474f-8407-5a6b159518ba",
-                            ConcurrencyStamp = "854ce701-2499-44a5-a10a-1f2b8e491ff3",
+                            ConcurrencyStamp = "563a6733-1805-4a6f-b0d3-1ad11d5e2394",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "bd2bcf0c-20db-474f-8407-5a6b159518bb",
-                            ConcurrencyStamp = "66b91ad3-0ed2-4f23-88a4-4777e07984eb",
+                            ConcurrencyStamp = "a8ecc145-3949-41de-86a6-11b5e2123684",
                             Name = "User",
                             NormalizedName = "USER"
                         });

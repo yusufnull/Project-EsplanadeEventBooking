@@ -14,7 +14,20 @@
             <InputText @bind-Value="@bookevent.Title" class="form-control" />
             <ValidationMessage For="@(() => bookevent.Title)" />
         </div>
+        <label>Location:</label>
+        <div>
+            <InputText @bind-Value="@bookevent.Title" class="form-control" />
+            <ValidationMessage For="@(() => bookevent.Title)" />
+        </div>
         <label>Start Date:</label>
+        <div class="form-group">
+            <div>
+                <InputDate @bind-Value="bookevent.StartDate" class="form-control">
+                </InputDate>
+                <ValidationMessage For="@(() => bookevent.StartDate)" />
+            </div>
+        </div>
+        <label>End Date:</label>
 
     </div>
     <button type="submit" class="btn btn-success btn-block">

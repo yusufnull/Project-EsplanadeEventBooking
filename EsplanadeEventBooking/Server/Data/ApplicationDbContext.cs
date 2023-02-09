@@ -30,7 +30,6 @@ namespace EsplanadeEventBooking.Server.Data
             builder.ApplyConfiguration(new UserRoleSeedConfiguration());
             builder.ApplyConfiguration(new UserSeedConfiguration());
             builder.ApplyConfiguration(new EuserSeedConfiguration());
-            builder.ApplyConfiguration(new BookeventSeedConfiguration());
         }
     }
 }

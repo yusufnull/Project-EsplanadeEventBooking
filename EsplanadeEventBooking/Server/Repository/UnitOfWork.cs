@@ -18,6 +18,7 @@ namespace EsplanadeEventBooking.Server.Repository
         private readonly ApplicationDbContext _context;
         private IGenericRepository<Bookevent> _bookevents;
         private IGenericRepository<Euser> _eusers;
+        private IGenericRepository<Creator> _creators;
         private IGenericRepository<Ticket> _tickets;
         private UserManager<ApplicationUser> _userManager;
 
@@ -31,6 +32,8 @@ namespace EsplanadeEventBooking.Server.Repository
             => _bookevents ??= new GenericRepository<Bookevent>(_context);
         public IGenericRepository<Euser> Eusers
             => _eusers ??= new GenericRepository<Euser>(_context);
+        public IGenericRepository<Creator> Creators
+            => _creators ??= new GenericRepository<Creator>(_context);
         public IGenericRepository<Ticket> Tickets
             => _tickets ??= new GenericRepository<Ticket>(_context);
 

@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace EsplanadeEventBooking.Server.Configurations.Entities
 {
-    public class EuserSeedConfiguration : IEntityTypeConfiguration<Euser>
+    public class CreatorSeedConfiguration : IEntityTypeConfiguration<Creator>
     {
-        public void Configure(EntityTypeBuilder<Euser> builder)
+        public void Configure(EntityTypeBuilder<Creator> builder)
         {
             builder.HasData(
-                new Euser
+                new Creator
                 {
                     Id = 1,
                     Name = "Adam",

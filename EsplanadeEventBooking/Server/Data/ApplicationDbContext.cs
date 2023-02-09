@@ -20,16 +20,19 @@ namespace EsplanadeEventBooking.Server.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
-        public DbSet<Ticket> Tickets { get; set; }
+
         public DbSet<Bookevent> Bookevents { get; set; }
+        public DbSet<Creator> Creators { get; set; }
         public DbSet<Euser> Eusers { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             builder.ApplyConfiguration(new RoleSeedConfiguration());
             builder.ApplyConfiguration(new UserRoleSeedConfiguration());
             builder.ApplyConfiguration(new UserSeedConfiguration());
-            builder.ApplyConfiguration(new EuserSeedConfiguration());
+            builder.ApplyConfiguration(new CreatorSeedConfiguration());
         }
     }
 }

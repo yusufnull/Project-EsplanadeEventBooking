@@ -11,6 +11,7 @@ namespace EsplanadeEventBooking.Server.IRepository
     {
         Task Save(HttpContext httpContext);
         IGenericRepository<Bookevent> Bookevents { get; }
+        IGenericRepository<Creator> Creators { get; }
         IGenericRepository<Euser> Eusers { get; }
         IGenericRepository<Ticket> Tickets { get; }
     }

@@ -65,11 +65,11 @@
 
 @code { 
     Bookevent bookevent = new Bookevent();
-    private IList<Euser> Creators;
+    private List<Creator> Creators;
 
     protected async override Task OnInitializedAsync()
     {
-        Creators = await _client.GetFromJsonAsync<List<Euser>>($"{Endpoints.EusersEndpoint}");
+        Creators = await _client.GetFromJsonAsync<List<Creator>>($"{Endpoints.CreatorsEndpoint}");
     }
 
     private async Task CreateBookevent()

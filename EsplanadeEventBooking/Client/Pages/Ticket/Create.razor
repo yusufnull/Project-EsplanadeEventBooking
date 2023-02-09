@@ -1,0 +1,88 @@
+﻿@page  "/tickets/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+<h3 class="card-title">Create New Ticket</h3>
+<hr />
+<br />
+
+<EditForm Model="@ticket" OnValidSubmit="CreateTicket">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group">
+        <label>Event:</label>
+        <div>
+            <InputSelect @bind-Value="ticket.BookeventId" class="form-control">
+                <option value="">-- Select Bookevent --</option>
+                @if (Bookevents != null)
+                {
+                    foreach (var bookevents in Bookevents)
+                    {
+                        <option value="@bookevents.Id">
+                            @bookevents.Title
+                        </option>
+                    }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => ticket.BookeventId)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Row:</label>
+        <div>
+            <InputNumber @bind-Value="@ticket.RowNo" class="form-control" />
+            <ValidationMessage For="@(() => ticket.RowNo)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Column:</label>
+        <div>
+            <InputNumber @bind-Value="@ticket.ColumnNo" class="form-control" />
+            <ValidationMessage For="@(() => ticket.ColumnNo)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>VIP:</label>
+        <div>
+            <InputCheckbox @bind-Value="@ticket.VIP" class="form-control" />
+            <ValidationMessage For="@(() => ticket.VIP)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Event:</label>
+        <div>
+            <InputSelect @bind-Value="ticket.EuserId" class="form-control">
+                <option value="">-- Select Euser --</option>
+                @if (Eusers != null)
+                {
+                    foreach (var eusers in Eusers)
+                    {
+                        <option value="@eusers.Id">
+                            @eusers.Name
+                        </option>
+                    }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => ticket.EuserId)" />
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success btn-block">
+        Create Ticket
+    </button>
+</EditForm>
+
+@code { Ticket ticket = new Ticket();
+    private List<Bookevent> Bookevents;
+    private List<Euser> Eusers;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Bookevents = await _client.GetFromJsonAsync<List<Bookevent>>($"{Endpoints.BookeventsEndpoint}");
+        Eusers = await _client.GetFromJsonAsync<List<Euser>>($"{Endpoints.EusersEndpoint}");
+    }
+
+    private async Task CreateTicket()
+    {
+        await _client.PostAsJsonAsync(Endpoints.TicketsEndpoint, ticket);
+        _navManager.NavigateTo("/tickets/");
+    }
+}

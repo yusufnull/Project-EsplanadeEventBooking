@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EsplanadeEventBooking.Server.Migrations
 {
-    public partial class test1 : Migration
+    public partial class newdb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -46,6 +46,24 @@ namespace EsplanadeEventBooking.Server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Creators",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Age = table.Column<int>(type: "int", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Creators", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -212,33 +230,6 @@ namespace EsplanadeEventBooking.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tickets",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RowNo = table.Column<int>(type: "int", nullable: false),
-                    ColumnNo = table.Column<int>(type: "int", nullable: false),
-                    VIP = table.Column<bool>(type: "bit", nullable: false),
-                    EuserID = table.Column<int>(type: "int", nullable: false),
-                    EventID = table.Column<int>(type: "int", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tickets", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Tickets_Eusers_EuserID",
-                        column: x => x.EuserID,
-                        principalTable: "Eusers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Bookevents",
                 columns: table => new
                 {
@@ -249,7 +240,6 @@ namespace EsplanadeEventBooking.Server.Migrations
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatorId = table.Column<int>(type: "int", nullable: false),
-                    TicketId = table.Column<int>(type: "int", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -259,17 +249,44 @@ namespace EsplanadeEventBooking.Server.Migrations
                 {
                     table.PrimaryKey("PK_Bookevents", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Bookevents_Eusers_CreatorId",
+                        name: "FK_Bookevents_Creators_CreatorId",
                         column: x => x.CreatorId,
-                        principalTable: "Eusers",
+                        principalTable: "Creators",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tickets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RowNo = table.Column<int>(type: "int", nullable: false),
+                    ColumnNo = table.Column<int>(type: "int", nullable: false),
+                    VIP = table.Column<bool>(type: "bit", nullable: false),
+                    EuserId = table.Column<int>(type: "int", nullable: false),
+                    BookeventId = table.Column<int>(type: "int", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tickets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tickets_Bookevents_BookeventId",
+                        column: x => x.BookeventId,
+                        principalTable: "Bookevents",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Bookevents_Tickets_TicketId",
-                        column: x => x.TicketId,
-                        principalTable: "Tickets",
+                        name: "FK_Tickets_Eusers_EuserId",
+                        column: x => x.EuserId,
+                        principalTable: "Eusers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -277,19 +294,19 @@ namespace EsplanadeEventBooking.Server.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "ad2bcf0c-20db-474f-8407-5a6b159518ba", "563a6733-1805-4a6f-b0d3-1ad11d5e2394", "Administrator", "ADMINISTRATOR" },
-                    { "bd2bcf0c-20db-474f-8407-5a6b159518bb", "a8ecc145-3949-41de-86a6-11b5e2123684", "User", "USER" }
+                    { "ad2bcf0c-20db-474f-8407-5a6b159518ba", "cec16822-06b4-42bc-a1dd-8b0ec19cf945", "Administrator", "ADMINISTRATOR" },
+                    { "bd2bcf0c-20db-474f-8407-5a6b159518bb", "2aa4d9f4-eca1-496b-a7d5-5a82d2774e3e", "User", "USER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "07df3e6d-c504-42f8-8c7c-af51f51667e8", "admin@localhost.com", false, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN", "AQAAAAEAACcQAAAAEIE3r5TZdSLkGCxYaVObBDA20EtcYwt6D7s2UfV82NBqulcUp8QSXVZsOcM6Diwo6A==", null, false, "b8521489-4e7c-4ffc-a782-08852fa1e4f6", false, "Admin" });
+                values: new object[] { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "a31ffdda-f5fb-4f8c-9e37-61398f234706", "admin@localhost.com", false, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN", "AQAAAAEAACcQAAAAEOZXsfXLuFkTz2IMY15EpIwmDFTTMcoH4wjF+vdv8Q1Ad+20Cu0Gte0YdXbwfrGz0g==", null, false, "62634ef3-7eed-492c-9afc-dba9ad3986b5", false, "Admin" });
 
             migrationBuilder.InsertData(
-                table: "Eusers",
+                table: "Creators",
                 columns: new[] { "Id", "Age", "CreatedBy", "DateCreated", "DateUpdated", "Name", "UpdatedBy" },
-                values: new object[] { 1, 20, "System", new DateTime(2023, 2, 9, 21, 11, 48, 334, DateTimeKind.Local).AddTicks(9972), new DateTime(2023, 2, 9, 21, 11, 48, 335, DateTimeKind.Local).AddTicks(8197), "Adam", "System" });
+                values: new object[] { 1, 20, "System", new DateTime(2023, 2, 10, 2, 50, 56, 612, DateTimeKind.Local).AddTicks(6323), new DateTime(2023, 2, 10, 2, 50, 56, 613, DateTimeKind.Local).AddTicks(3579), "Adam", "System" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -341,11 +358,6 @@ namespace EsplanadeEventBooking.Server.Migrations
                 column: "CreatorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bookevents_TicketId",
-                table: "Bookevents",
-                column: "TicketId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_DeviceCodes_DeviceCode",
                 table: "DeviceCodes",
                 column: "DeviceCode",
@@ -372,9 +384,14 @@ namespace EsplanadeEventBooking.Server.Migrations
                 columns: new[] { "SubjectId", "SessionId", "Type" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tickets_EuserID",
+                name: "IX_Tickets_BookeventId",
                 table: "Tickets",
-                column: "EuserID");
+                column: "BookeventId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tickets_EuserId",
+                table: "Tickets",
+                column: "EuserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -395,13 +412,13 @@ namespace EsplanadeEventBooking.Server.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Bookevents");
-
-            migrationBuilder.DropTable(
                 name: "DeviceCodes");
 
             migrationBuilder.DropTable(
                 name: "PersistedGrants");
+
+            migrationBuilder.DropTable(
+                name: "Tickets");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -410,10 +427,13 @@ namespace EsplanadeEventBooking.Server.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Tickets");
+                name: "Bookevents");
 
             migrationBuilder.DropTable(
                 name: "Eusers");
+
+            migrationBuilder.DropTable(
+                name: "Creators");
         }
     }
 }

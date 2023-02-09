@@ -23,7 +23,8 @@ else
         <thead>
             <tr>
                 <th>Event</th>
-                <th>Seat</th>
+                <th>RowNo</th>
+                <th>ColumnNo</th>
                 <th>VIP</th>
                 <th>User</th>
                 <th>Actions</th>
@@ -31,16 +32,32 @@ else
         </thead>
         <tbody>
             @foreach (var ticket in Tickets)
-                {
-                }
+            {
+                <tr>
+                    <td>@ticket.Bookevent.Title</td>
+                    <td>@ticket.RowNo</td>
+                    <td>@ticket.ColumnNo</td>
+                    <td>@ticket.VIP</td>
+                    <td>@ticket.Euser.Name</td>
+                    <td>
+                        <a href="/tickets/view/@ticket.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/tickets/edit/@ticket.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(ticket.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 }
 
 @code {
     private List<Ticket> Tickets;
-    private IList<Euser> Eusers;
-    private IList<Bookevent> Bookevents;
 
     protected async override Task OnInitializedAsync()
     {
